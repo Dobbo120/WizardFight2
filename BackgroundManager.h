@@ -14,8 +14,10 @@ private:
 	int seed;
 
 	int tileHeight;
-
 	int tileWidth;
+
+	float gameX;
+	float gameY;
 	
 public:
 
@@ -27,4 +29,7 @@ public:
 
 	int getLength();
 
+	Vector2f getPos();
+
+	Vector2f move(float xDir, float yDir, Time elTime);
 };

@@ -37,6 +37,9 @@ int main()
 
 	backgroundManager.generate(windowWidth, windowHeight, gameScale, grassTilePathW);
 
+	Clock clock;
+	clock.start();
+
 	while (window.isOpen()) {
 
 		//optional can either hold a value or be empty, so in this case, I suppose it's whether or not there is an event from the window, it surprises me that this is a subloop
@@ -51,13 +54,17 @@ int main()
 
 		window.clear();
 		
+
 		for (int i = 0; i < backgroundManager.getLength(); i++) {
 			window.draw(backgroundManager.getTile(i));
 		}
 		
 		window.draw(wizardSprite);
 
+		clock.reset();
+		
 		window.display();
+		
 	}
 
 	
