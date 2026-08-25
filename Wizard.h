@@ -14,7 +14,7 @@ private:
 	float playerY;
 
 public:
-	Wizard(float scale);
+	Wizard(float winX, float winY, float scale);
 
 	Sprite getSprite();
 

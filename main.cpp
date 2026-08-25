@@ -2,6 +2,7 @@
 #include <iostream>
 #include <vector>
 #include "BackgroundManager.h"
+#include "Wizard.h"
 
 using namespace sf;
 
@@ -14,20 +15,20 @@ int main()
 	//Seeding the random Generator
 	srand((int)time(0));
 
-	//Grabbing the texture from the files and applying it to a sprite
-	Texture wizardTexture("graphics/Wizard.png");
-	Sprite wizardSprite(wizardTexture);
-
+	
+	
 	//For testing on a large monitor, simply scaling by 3 is fine, but I will probably want to tie it to Window Size
-	float gameScale = 3;
-	wizardSprite.setScale(Vector2f(gameScale, gameScale));
+	
+	
 	
 	//This creates the position for the wizard, to have it centered, I grab the pixel size of the wizard multiplied by the game scale and half it to offset.
 	//Is this potentially off by a pixel?  (Based on theory not observation)
 	int windowWidth = window.getSize().x;
 	int windowHeight = window.getSize().y;
-	Vector2f wizardPosition((windowWidth / 2) - (gameScale * wizardSprite.getLocalBounds().size.x / 2) , (windowHeight / 2) - (gameScale * wizardSprite.getLocalBounds().size.y / 2));
-	wizardSprite.setPosition(wizardPosition);
+
+	float gameScale = 3;
+
+	Wizard wizard(windowWidth , windowHeight , gameScale);
 
 	BackgroundManager backgroundManager = BackgroundManager();
 
@@ -59,7 +60,7 @@ int main()
 			window.draw(backgroundManager.getTile(i));
 		}
 		
-		window.draw(wizardSprite);
+		window.draw(wizard.getSprite());
 
 		clock.reset();
 		
