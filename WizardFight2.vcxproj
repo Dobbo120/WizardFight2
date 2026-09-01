@@ -146,10 +146,12 @@
   <ItemGroup>
     <ClCompile Include="BackgroundManager.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Background.cpp" />
     <ClCompile Include="TextureHolder.cpp" />
     <ClCompile Include="Wizard.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Background.h" />
     <ClInclude Include="BackgroundManager.h" />
     <ClInclude Include="TextureHolder.h" />
     <ClInclude Include="Wizard.h" />

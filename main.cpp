@@ -14,11 +14,7 @@ int main()
 
 	//Seeding the random Generator
 	srand((int)time(0));
-
-	
-	
-	//For testing on a large monitor, simply scaling by 3 is fine, but I will probably want to tie it to Window Size
-	
+		
 	
 	
 	//This creates the position for the wizard, to have it centered, I grab the pixel size of the wizard multiplied by the game scale and half it to offset.
@@ -27,12 +23,15 @@ int main()
 	int windowHeight = window.getSize().y;
 
 	float gameScale = 3;
+	//Scaling the game makes it easier for me to see everything on my monitor, eventually it would be nice to scale this dynamically with detected monitor size, and/or implement a slider for
+	//players to choose their preference
 
 	Wizard wizard(windowWidth , windowHeight , gameScale);
 
 	BackgroundManager backgroundManager = BackgroundManager();
 
-	//This shit seems so pointless to me, but debug throws a hissy fit if it's not a wide string
+	//This seems so pointless to me, but debug throws a hissy fit if it's not a wide string
+	//I think I know a better way to do this, but this whole code is likely to be changed with the implementation of the new Texture Management system.
 	String grassTilePath = "graphics/GrassTiles.png";
 	std::wstring grassTilePathW = grassTilePath.toWideString();
 
@@ -40,6 +39,7 @@ int main()
 
 	Clock clock;
 	clock.start();
+	//Clock initiated for handling movement, but there is no movement yet
 
 	while (window.isOpen()) {
 
@@ -48,22 +48,24 @@ int main()
 		//magical moments where you could click without the event being caught.  ...maybe
 		while (const std::optional event = window.pollEvent())
 		{
-			//So, I don't really understand -> yet 
+			//This is taken from the SFML Tutorial on their website
 			if (event->is<Event::Closed>())
 				window.close();
 		}
 
 		window.clear();
 		
-
+		//This system may effectively draw the background, but it is not the most memory efficient, especially with the Manager returning a tile each time rather than using a reference
 		for (int i = 0; i < backgroundManager.getLength(); i++) {
 			window.draw(backgroundManager.getTile(i));
 		}
 		
 		window.draw(wizard.getSprite());
 
+
 		clock.reset();
 		
+
 		window.display();
 		
 	}

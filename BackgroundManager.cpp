@@ -22,7 +22,7 @@ void BackgroundManager::generate(int screenWidth, int screenHeight, float scale,
 
 	//Debug likes it if I catch the return
 	if (backgroundTexture.loadFromFile(std::filesystem::path(textureFile)) == false) {
-		std::cout << "You done fucked up, that's an invalid path for the texture";
+		std::cout << "You messed up, that's an invalid path for the texture";
 	}
 
 	//Full width and height of the texture in pixels
@@ -55,6 +55,7 @@ Sprite BackgroundManager::getTile(int tileNum) {
 int BackgroundManager::getLength() {
 
 	return(backgroundSprite.size());
+	
 
 }
 
@@ -63,6 +64,7 @@ Vector2f BackgroundManager::getPos() {
 }
 
 Vector2f BackgroundManager::move(float xDir, float yDir, Time eltime) {
+	//This would have handled movement, but I did not make the code changes to support generating tiles based on coordinates before switching to a new Texture Handling system
 	if (xDir * yDir > 0) {
 		//Greater than zero is for ostensibly including gamepad support down the line, but at the moment, I'm only implementing 45 degree angles
 		//Also, instead of operating with a normal mathematical means of limiting, I am purposefully going to make diagonal movement marginally faster;
