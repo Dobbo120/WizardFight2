@@ -29,7 +29,7 @@ Texture& TextureHolder::GetTexture(String const& filename) {
 		auto& texture = m[filename];
 		//If the filename isn't already in the map, a texture object is created in the map linked to the filename
 
-		std::filesystem::path filenamePath(filename);
+		std::filesystem::path filenamePath = filename.toWideString();
 		//Having to convert these strings to paths is stupid
 
 		if (!texture.loadFromFile(filenamePath)) {

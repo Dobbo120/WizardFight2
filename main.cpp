@@ -1,7 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <vector>
-#include "BackgroundManager.h"
+#include "Background.h"
 #include "Wizard.h"
 
 using namespace sf;
@@ -28,14 +28,21 @@ int main()
 
 	Wizard wizard(windowWidth , windowHeight , gameScale);
 
-	BackgroundManager backgroundManager = BackgroundManager();
+	Background background;
+
+	if (!background.load("graphics/GrassTiles.png", { 32,32 }, 30, 20)) {
+		return -1;
+	}
+
+
+	//BackgroundManager backgroundManager = BackgroundManager();
 
 	//This seems so pointless to me, but debug throws a hissy fit if it's not a wide string
 	//I think I know a better way to do this, but this whole code is likely to be changed with the implementation of the new Texture Management system.
-	String grassTilePath = "graphics/GrassTiles.png";
-	std::wstring grassTilePathW = grassTilePath.toWideString();
+	//String grassTilePath = "graphics/GrassTiles.png";
+	//std::wstring grassTilePathW = grassTilePath.toWideString();
 
-	backgroundManager.generate(windowWidth, windowHeight, gameScale, grassTilePathW);
+	//backgroundManager.generate(windowWidth, windowHeight, gameScale, grassTilePathW);
 
 	Clock clock;
 	clock.start();
@@ -56,10 +63,12 @@ int main()
 		window.clear();
 		
 		//This system may effectively draw the background, but it is not the most memory efficient, especially with the Manager returning a tile each time rather than using a reference
-		for (int i = 0; i < backgroundManager.getLength(); i++) {
-			window.draw(backgroundManager.getTile(i));
-		}
+		//for (int i = 0; i < backgroundManager.getLength(); i++) {
+		//	window.draw(backgroundManager.getTile(i));
+		//}
 		
+		window.draw(background);
+
 		window.draw(wizard.getSprite());
 
 
