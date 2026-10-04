@@ -2,6 +2,7 @@
 #include <iostream>
 #include <vector>
 #include "Background.h"
+
 #include "Wizard.h"
 
 using namespace sf;
@@ -25,12 +26,14 @@ int main()
 	float gameScale = 3;
 	//Scaling the game makes it easier for me to see everything on my monitor, eventually it would be nice to scale this dynamically with detected monitor size, and/or implement a slider for
 	//players to choose their preference
+	
+
 
 	Wizard wizard(windowWidth , windowHeight , gameScale);
 
 	Background background;
 
-	if (!background.load("graphics/GrassTiles.png", { 32,32 }, 30, 20)) {
+	if (!background.load("graphics/GrassTiles.png", { 32,32 }, gameScale)) {
 		return -1;
 	}
 

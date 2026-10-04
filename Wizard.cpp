@@ -5,6 +5,7 @@
 using namespace sf;
 
 Wizard::Wizard(float winX, float winY, float scale) :
+
 	texture("graphics/Wizard.png"),
 	sprite(texture)
 	
