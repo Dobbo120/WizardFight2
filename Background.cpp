@@ -12,6 +12,10 @@ const unsigned int yTiles = 20;
 
 std::array<int, xTiles* yTiles > level = { 0 };
 
+Background::Background() {
+	startPosX = 0;
+	startPosY = 0;
+}
 
 bool Background::load(const std::filesystem::path& tileset, Vector2u tileSize, float scale) {
 	// This code only has minor deviations from the SFML tutorial for a TileMap from 2026
@@ -29,8 +33,8 @@ bool Background::load(const std::filesystem::path& tileset, Vector2u tileSize, f
 	//How many tiles are offscreen in any direction
 		
 	m_vertices.setPrimitiveType(PrimitiveType::Triangles);
-	std::cout << xTiles << " ";
-	std::cout << yTiles;
+	//std::cout << xTiles << " ";
+	//std::cout << yTiles;
 	m_vertices.resize(xTiles*yTiles*6);
 
 	for (unsigned int i = 0; i < xTiles*yTiles; ++i) {
@@ -55,12 +59,12 @@ bool Background::load(const std::filesystem::path& tileset, Vector2u tileSize, f
 
 			Vertex* triangles = &m_vertices[(i + j * xTiles) * 6];
 
-			triangles[0].position = sf::Vector2f((i - offScreen) * tileWidth, (j - offScreen) * tileHeight);
-			triangles[1].position = sf::Vector2f((i - offScreen + 1) * tileWidth, (j - offScreen) * tileHeight);
-			triangles[2].position = sf::Vector2f((i- offScreen) * tileWidth, (j - offScreen + 1) * tileHeight);
-			triangles[3].position = sf::Vector2f((i - offScreen) * tileWidth, (j - offScreen + 1) * tileHeight);
-			triangles[4].position = sf::Vector2f((i - offScreen + 1) * tileWidth, (j - offScreen) * tileHeight);
-			triangles[5].position = sf::Vector2f((i - offScreen + 1) * tileWidth, (j - offScreen + 1) * tileHeight);
+			triangles[0].position = sf::Vector2f((i - offScreen) * tileWidth + startPosX, (j - offScreen) * tileHeight + startPosY);
+			triangles[1].position = sf::Vector2f((i - offScreen + 1) * tileWidth + startPosX, (j - offScreen) * tileHeight + startPosY);
+			triangles[2].position = sf::Vector2f((i- offScreen) * tileWidth + startPosX, (j - offScreen + 1) * tileHeight + startPosY);
+			triangles[3].position = sf::Vector2f((i - offScreen) * tileWidth + startPosX, (j - offScreen + 1) * tileHeight + startPosY);
+			triangles[4].position = sf::Vector2f((i - offScreen + 1) * tileWidth + startPosX, (j - offScreen) * tileHeight + startPosY);
+			triangles[5].position = sf::Vector2f((i - offScreen + 1) * tileWidth + startPosX, (j - offScreen + 1) * tileHeight + startPosY);
 			//This sets the corners of the Triangles, the offscreen allows some tiles to exist offscreen
 
 			// define the 6 matching texture coordinates
@@ -83,6 +87,31 @@ void Background::draw(RenderTarget& target, RenderStates states) const{
 	states.texture = &m_tileset;
 
 	target.draw(m_vertices, states);
+}
+
+void Background::move(int dir, Vector2u tileSize, float scale) {
+	startPosX += 1;
+	startPosY += 1;
+	//This should all be defined above, and I could probably make a separate function for repositioning the background?
+	int offScreen = 3;
+
+	int tileWidth = tileSize.x * scale;
+	int tileHeight = tileSize.y * scale;
+
+	for (unsigned int i = 0; i < xTiles; ++i) {
+		for (unsigned int j = 0; j < yTiles; ++j) {
+			const int tileNumber = level[i + j * xTiles];
+
+			Vertex* triangles = &m_vertices[(i + j * xTiles) * 6];
+
+			triangles[0].position = sf::Vector2f((i - offScreen) * tileWidth + startPosX, (j - offScreen) * tileHeight + startPosY);
+			triangles[1].position = sf::Vector2f((i - offScreen + 1) * tileWidth + startPosX, (j - offScreen) * tileHeight + startPosY);
+			triangles[2].position = sf::Vector2f((i - offScreen) * tileWidth + startPosX, (j - offScreen + 1) * tileHeight + startPosY);
+			triangles[3].position = sf::Vector2f((i - offScreen) * tileWidth + startPosX, (j - offScreen + 1) * tileHeight + startPosY);
+			triangles[4].position = sf::Vector2f((i - offScreen + 1) * tileWidth + startPosX, (j - offScreen) * tileHeight + startPosY);
+			triangles[5].position = sf::Vector2f((i - offScreen + 1) * tileWidth + startPosX, (j - offScreen + 1) * tileHeight + startPosY);
+		}
+	}
 }
 
 	
